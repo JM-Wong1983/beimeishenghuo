@@ -1,0 +1,257 @@
+.sidebar-container {
+  position: relative;
+  height: 100%;
+}
+
+.sidebar {
+  position: fixed !important;
+  height: 100vh;
+  z-index: 1000;
+  left: 0;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  overflow: hidden;
+}
+
+.sidebar.ant-layout-sider-collapsed {
+  width: 60px !important;
+  min-width: 60px !important;
+  max-width: 60px !important;
+}
+
+.logo {
+  height: var(--header-height);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  width: 100%;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.sidebar.ant-layout-sider-collapsed .logo {
+  padding: 10px;
+}
+
+.company-logo {
+  max-width: 100%;
+  max-height: 60px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.sidebar.ant-layout-sider-collapsed .company-logo {
+  max-width: 40px;
+  max-height: 40px;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.logo p {
+  margin: 2px 0 0 0;
+  font-size: 12px;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.sidebar-menu {
+  border-right: none;
+  flex: 1;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.sidebar-menu .ant-menu-item {
+  height: 45px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding-left: 16px !important;
+  margin: 4px 0 !important;
+}
+
+.sidebar-menu .ant-menu-item .anticon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  line-height: 1;
+  font-size: 16px;
+}
+
+.ant-menu.ant-menu-inline-collapsed {
+  width: 60px !important;
+}
+
+.ant-menu.ant-menu-inline-collapsed .ant-menu-item {
+  width: 60px !important;
+  padding: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  margin: 0 !important;
+}
+
+.ant-menu.ant-menu-inline-collapsed .ant-menu-item .anticon {
+  margin: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.ant-menu.ant-menu-inline-collapsed > .ant-menu-item .ant-menu-item-icon {
+  font-size: 18px;
+  line-height: 18px;
+  margin: 0;
+}
+
+.sidebar-menu .ant-menu-item:hover {
+  color: var(--primary-color);
+}
+
+.sidebar-menu .ant-menu-item-selected {
+  background-color: rgba(26, 115, 232, 0.1);
+  color: var(--primary-color);
+}
+
+.user-menu {
+  padding: 16px;
+  position: absolute;
+  bottom: 60px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sidebar.ant-layout-sider-collapsed .user-menu {
+  padding: 8px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 60px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.user-info:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar.ant-layout-sider-collapsed .username {
+  display: none;
+}
+
+.username {
+  margin-left: 8px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.login-button {
+  width: 100%;
+  text-align: center;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.company-info {
+  padding: 16px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.sidebar.ant-layout-sider-collapsed .company-info {
+  display: none;
+}
+
+.company-info p {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  line-height: 1.5;
+}
+
+/* 控制侧边栏折叠按钮样式 */
+.ant-layout-sider-trigger {
+  display: none;
+}
+
+/* 侧边栏收起按钮 */
+.collapse-button {
+  position: absolute;
+  top: 80px;
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 101;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+}
+
+.sidebar.ant-layout-sider-collapsed .login-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 60px;
+  height: 45px;
+  margin: 0 !important;
+}
+
+.sidebar.ant-layout-sider-collapsed .login-button .anticon {
+  margin: 0 !important;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  width: 18px;
+  height: 18px;
+}
+
+/* 悬停效果 */
+.sidebar:hover {
+  width: 180px !important;
+}
+
+/* 确保展开时文字平滑显示 */
+.ant-menu-item-only-child {
+  transition: all 0.3s ease;
+}
+
+/* 防止左二区域受到侧边栏展开的影响 */
+.main-content {
+  transition: all 0.3s ease;
+} 

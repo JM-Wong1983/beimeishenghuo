@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  color: #333;
+  background-color: #f8f9fa;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #1a73e8;
+  --secondary-color: #e8eaed;
+  --background-color: #f8f9fa;
+  --text-color: #333;
+  --sidebar-width: 250px;
+  --header-height: 80px;
+  --calculator-height: 180px;
+  --input-height: 60px;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.ant-layout {
+  background: var(--background-color);
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: white;
+  border-right: 1px solid var(--secondary-color);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
+  height: 100vh;
+  overflow: hidden;
+} 
