@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
 import Sidebar from './components/Sidebar';
 import ChatInterface from './components/ChatInterface';
@@ -20,6 +20,11 @@ export interface CompanyInfo {
   companyType: 'CORP' | 'LLC' | 'NONPROFIT';
 }
 
+// 定义侧边栏切换事件接口
+interface SidebarToggleEvent extends CustomEvent {
+  detail: { collapsed: boolean };
+}
+
 const App = () => {
   // 创建共享状态
   const [companyInfo, setCompanyInfo] = useState({
@@ -34,6 +39,21 @@ const App = () => {
     businessScope: '',
     companyType: 'CORP' as 'CORP' | 'LLC' | 'NONPROFIT'
   });
+  
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  // 监听侧边栏折叠状态变化
+  useEffect(() => {
+    const handleSidebarToggle = (event: SidebarToggleEvent) => {
+      setSidebarCollapsed(event.detail.collapsed);
+    };
+    
+    window.addEventListener('sidebarToggle', handleSidebarToggle as EventListener);
+    
+    return () => {
+      window.removeEventListener('sidebarToggle', handleSidebarToggle as EventListener);
+    };
+  }, []);
 
   // 更新公司信息的函数
   const updateCompanyInfo = (info: Partial<CompanyInfo>) => {
@@ -46,9 +66,9 @@ const App = () => {
   return (
     <Layout className="app-container">
       <Sidebar />
-      <Layout className="main-content">
+      <Layout className={`main-content ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
         <div className="content-container">
-          <div className="side-section">
+          <div className={`side-section ${sidebarCollapsed ? 'expanded' : ''}`}>
             <ChatInterface />
           </div>
           <div className="chat-section">

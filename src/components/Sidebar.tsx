@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Layout, Menu, Divider, Button, Dropdown, Avatar } from 'antd';
 import type { MenuProps } from 'antd';
 import {
@@ -13,15 +13,13 @@ import {
   RightOutlined,
 } from '@ant-design/icons';
 import './Sidebar.css';
-import { AuthContext } from '../contexts/AuthContext';
 
 const { Sider } = Layout;
 
-const Sidebar: React.FC = () => {
+const Sidebar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
-  const [collapsed, setCollapsed] = useState(true);
-  const { isLoggedIn: authContextLoggedIn } = useContext(AuthContext);
+  const [collapsed, setCollapsed] = useState(false);
   
   // 模拟登录功能
   const handleLogin = () => {
@@ -35,51 +33,33 @@ const Sidebar: React.FC = () => {
     setUsername('');
   };
   
-  // 添加鼠标悬停处理函数
-  const handleMouseEnter = () => {
-    setCollapsed(false);
+  // 切换侧边栏收起/展开状态
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+    // 触发自定义事件通知其他组件侧边栏状态已改变
+    const event = new CustomEvent('sidebarToggle', { detail: { collapsed: !collapsed } });
+    window.dispatchEvent(event);
   };
   
-  const handleMouseLeave = () => {
-    setCollapsed(true);
-  };
-
-  useEffect(() => {
-    // 侧边栏状态改变时更新body类
-    if (collapsed) {
-      document.body.classList.add('sidebar-collapsed');
-    } else {
-      document.body.classList.remove('sidebar-collapsed');
-    }
-    
-    // 添加类以标识侧边栏展开状态
-    const sidebarElement = document.querySelector('.sidebar');
-    if (sidebarElement) {
-      if (collapsed) {
-        sidebarElement.classList.remove('ant-layout-sider-expanded');
-      } else {
-        sidebarElement.classList.add('ant-layout-sider-expanded');
-      }
-    }
-  }, [collapsed]);
-  
-  const menuItems = [
-    {
-      key: 'home',
-      icon: <HomeOutlined />,
-      label: '首页',
-    },
-    {
-      key: 'services',
-      icon: <AppstoreOutlined />,
-      label: '业务办理',
-    },
-    {
-      key: 'faq',
-      icon: <QuestionCircleOutlined />,
-      label: '百问百答',
-    },
-  ];
+  // 使用 JSX 元素直接定义菜单项，而不是使用配置对象
+  const renderMenu = () => (
+    <Menu
+      mode="vertical"
+      defaultSelectedKeys={['home']}
+      className="sidebar-menu"
+      inlineCollapsed={collapsed}
+    >
+      <Menu.Item key="home" icon={<HomeOutlined />}>
+        首页
+      </Menu.Item>
+      <Menu.Item key="services" icon={<AppstoreOutlined />}>
+        业务办理
+      </Menu.Item>
+      <Menu.Item key="faq" icon={<QuestionCircleOutlined />}>
+        百问百答
+      </Menu.Item>
+    </Menu>
+  );
   
   // 用户菜单项
   const userMenuItems = [
@@ -95,39 +75,51 @@ const Sidebar: React.FC = () => {
         ])
   ];
 
+  // Logo URL
+  const logoUrl = process.env.PUBLIC_URL + '/logo.png';
+
   return (
     <div className="sidebar-container">
-      <Sider
-        className="sidebar"
-        collapsible
-        collapsed={collapsed}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        trigger={null} // 移除触发器，使用鼠标悬停代替
+      <div 
+        className="collapse-button" 
+        onClick={toggleCollapsed} 
+        style={{ 
+          left: collapsed ? '46px' : '166px',
+          top: '18px'
+        }}
+      >
+        {collapsed ? <RightOutlined style={{ fontSize: '12px' }} /> : <LeftOutlined style={{ fontSize: '12px' }} />}
+      </div>
+      <Sider 
+        width={180} 
         collapsedWidth={60}
-        width={180}
+        collapsed={collapsed}
+        className="sidebar"
       >
         <div className="logo">
-          <img 
-            src="/logo.png" 
-            alt="北美生活" 
-            className="company-logo" 
-          />
+          {collapsed ? (
+            <Avatar 
+              src="/logo.png" 
+              alt="北美生活" 
+              size={36} 
+              style={{ margin: '12px' }}
+            />
+          ) : (
+            <img 
+              src="/logo.png" 
+              alt="北美生活" 
+              className="company-logo" 
+            />
+          )}
         </div>
-        {!collapsed && <Divider style={{ margin: '0 0 16px 0' }} />}
-        <Menu
-          mode="inline"
-          items={menuItems}
-          defaultSelectedKeys={['home']}
-          className="sidebar-menu"
-          inlineCollapsed={collapsed}
-        />
+        <Divider style={{ margin: '0 0 16px 0', display: collapsed ? 'none' : 'block' }} />
+        {renderMenu()}
         <div className="user-menu">
           <Dropdown menu={{ items: userMenuItems }} placement="topCenter" trigger={['click']}>
             {isLoggedIn ? (
               <div className="user-info">
                 <Avatar icon={<UserOutlined />} style={{ backgroundColor: '#1890ff' }} />
-                <span className="username">{username}</span>
+                {!collapsed && <span className="username">{username}</span>}
               </div>
             ) : (
               <Button type="text" icon={<LoginOutlined />} className="login-button">
@@ -136,21 +128,11 @@ const Sidebar: React.FC = () => {
             )}
           </Dropdown>
         </div>
-        {!collapsed && (
-          <div className="company-info">
-            <p>© 2024 北美生活</p>
-            <p>专业美国公司注册服务</p>
-          </div>
-        )}
+        <div className="company-info" style={{ display: collapsed ? 'none' : 'block' }}>
+          <p>© 2024 北美生活</p>
+          <p>专业美国公司注册服务</p>
+        </div>
       </Sider>
-      <div 
-        className="collapse-button" 
-        style={{ 
-          left: collapsed ? '50px' : '170px' 
-        }}
-      >
-        {collapsed ? <RightOutlined style={{ fontSize: '12px' }} /> : <LeftOutlined style={{ fontSize: '12px' }} />}
-      </div>
     </div>
   );
 };

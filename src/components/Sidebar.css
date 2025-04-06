@@ -4,22 +4,22 @@
 }
 
 .sidebar {
-  position: fixed !important;
-  height: 100vh;
-  z-index: 1000;
-  left: 0;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  width: 180px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  transition: all 0.3s ease;
   overflow: hidden;
 }
 
-.sidebar.ant-layout-sider-collapsed {
-  width: 60px !important;
-  min-width: 60px !important;
-  max-width: 60px !important;
+.ant-layout-sider-children {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
@@ -35,12 +35,12 @@
 }
 
 .sidebar.ant-layout-sider-collapsed .logo {
-  padding: 10px;
+  padding: 16px 0;
 }
 
 .company-logo {
   max-width: 100%;
-  max-height: 60px;
+  max-height: 80px;
   object-fit: contain;
   transition: all 0.3s ease;
 }
@@ -67,8 +67,6 @@
 .sidebar-menu {
   border-right: none;
   flex: 1;
-  width: 100%;
-  margin-top: 8px;
 }
 
 .sidebar-menu .ant-menu-item {
@@ -77,48 +75,16 @@
   align-items: center;
   font-size: 14px;
   padding-left: 16px !important;
-  margin: 4px 0 !important;
 }
 
-.sidebar-menu .ant-menu-item .anticon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 16px;
-  height: 16px;
-  line-height: 1;
-  font-size: 16px;
+.ant-layout-sider-collapsed .ant-menu-item .ant-menu-title-content {
+  opacity: 0;
+  display: none;
 }
 
-.ant-menu.ant-menu-inline-collapsed {
-  width: 60px !important;
-}
-
-.ant-menu.ant-menu-inline-collapsed .ant-menu-item {
-  width: 60px !important;
+.ant-layout-sider-collapsed .ant-menu-item {
   padding: 0 !important;
-  display: flex;
   justify-content: center;
-  align-items: center;
-  height: 45px;
-  margin: 0 !important;
-}
-
-.ant-menu.ant-menu-inline-collapsed .ant-menu-item .anticon {
-  margin: 0 !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 1;
-  width: 18px;
-  height: 18px;
-  font-size: 18px;
-}
-
-.ant-menu.ant-menu-inline-collapsed > .ant-menu-item .ant-menu-item-icon {
-  font-size: 18px;
-  line-height: 18px;
-  margin: 0;
 }
 
 .sidebar-menu .ant-menu-item:hover {
@@ -138,12 +104,10 @@
   box-sizing: border-box;
 }
 
-.sidebar.ant-layout-sider-collapsed .user-menu {
-  padding: 8px 0;
+.ant-layout-sider-collapsed .user-menu {
+  padding: 16px 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  bottom: 60px;
 }
 
 .user-info {
@@ -159,7 +123,7 @@
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.sidebar.ant-layout-sider-collapsed .username {
+.ant-layout-sider-collapsed .username {
   display: none;
 }
 
@@ -173,10 +137,10 @@
 .login-button {
   width: 100%;
   text-align: center;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.ant-layout-sider-collapsed .login-button span:last-child {
+  display: none;
 }
 
 .company-info {
@@ -186,7 +150,7 @@
   bottom: 0;
 }
 
-.sidebar.ant-layout-sider-collapsed .company-info {
+.ant-layout-sider-collapsed .company-info {
   display: none;
 }
 
@@ -205,7 +169,6 @@
 /* 侧边栏收起按钮 */
 .collapse-button {
   position: absolute;
-  top: 80px;
   width: 24px;
   height: 24px;
   background-color: #fff;
@@ -214,44 +177,13 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   z-index: 101;
-  border: 1px solid #eee;
+  border: 1px solid #ddd;
   transition: all 0.3s ease;
 }
 
-.sidebar.ant-layout-sider-collapsed .login-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  width: 60px;
-  height: 45px;
-  margin: 0 !important;
-}
-
-.sidebar.ant-layout-sider-collapsed .login-button .anticon {
-  margin: 0 !important;
-  font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 1;
-  width: 18px;
-  height: 18px;
-}
-
-/* 悬停效果 */
-.sidebar:hover {
-  width: 180px !important;
-}
-
-/* 确保展开时文字平滑显示 */
-.ant-menu-item-only-child {
-  transition: all 0.3s ease;
-}
-
-/* 防止左二区域受到侧边栏展开的影响 */
-.main-content {
-  transition: all 0.3s ease;
+.collapse-button:hover {
+  background-color: #f5f5f5;
+  transform: scale(1.1);
 } 
